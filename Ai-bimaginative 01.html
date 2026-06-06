@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Service Pipeline | bImaginative</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --card-bg: #141414;
+            --card-border: #222222;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #f3e5ab;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header-section h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .header-section h1 span {
+            color: var(--accent-gold);
+            font-weight: 400;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: stretch;
+            margin-bottom: 90px;
+        }
+
+        @media (max-width: 968px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pricing-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: #333333;
+        }
+
+        /* Highlighted Premium Card */
+        .pricing-card.popular {
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: var(--accent-gold);
+            color: #000000;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 2px;
+        }
+
+        .tier-title {
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .price-container {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .currency {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            font-weight: 300;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1;
+            margin: 0 5px;
+        }
+
+        .period {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 35px 0;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            color: #cccccc;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .features-list li::before {
+            content: "—";
+            color: var(--accent-gold);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: block;
+            text-align: center;
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+            padding: 14px 20px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--text-main);
+            color: #000000;
+        }
+
+        .popular .cta-button {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .popular .cta-button:hover {
+            background-color: var(--accent-gold-hover);
+            border-color: var(--accent-gold-hover);
+        }
+
+        /* Portfolio/Artwork Section */
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 80px;
+        }
+
+        .portfolio-header h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .portfolio-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Placeholder graphic asset styling */
+        .portfolio-item .placeholder-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .portfolio-item h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+        }
+
+        .portfolio-item p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header Content -->
+        <section class="header-section">
+            <h1>AI Studio <span>Pipelines</span></h1>
+            <p>On-demand premium artwork, visual graphics, and cinematic video assets built specifically for digital deployment and high-end printed media workflows.</p>
+        </section>
+
+        <!-- Pricing Tiers -->
+        <section class="pricing-grid">
+            
+            <!-- Tier 1: Monthly -->
+            <div class="pricing-card">
+                <h2 class="tier-title">Monthly Sprint</h2>
+                <div class="price-container">
+                    <span class="currency">€</span>
+                    <span class="price">399</span>
+                    <span class="period">/ month</span>
+                </div>
+                <ul class="features-list">
+                    <li><strong>15 Master Graphics</strong> optimized for social channels or standard print layouts</li>
+                    <li><strong>3 Cinematic AI Short Videos</strong> (15-30s edits with sound pairing)</li>
+                    <li>Standard priority rendering pipeline (48-72h turnaround)</li>
+                    <li>2 comprehensive revision iterations per asset request</li>
+                    <li>Full digital commercial distribution rights</li>
+                </ul>
+                <a href="#contact" class="cta-button">Initiate Plan</a>
+            </div>
+
+            <!-- Tier 2: 6 Months (Popular) -->
+            <div class="pricing-card popular">
+                <div class="badge">Most Popular</div>
+                <h2 class="tier-title">Growth Pipeline</h2>
+                <div class="price-container">
+                    <span class="currency">€</span>
+                    <span class="price">319</span>
+                    <span class="period">/ month</span>
+                </div>
+                <ul class="features-list">
+                    <li><strong>25 Master Graphics</strong> (Omni-channel branding, print, or layouts)</li>
+                    <li><strong>6 Cinematic AI Videos / Motion Graphics</strong> optimized for maximum social impact</li>
+                    <li>Priority queue deployment (24-48h turnaround)</li>
+                    <li>Custom AI model training tailored explicitly to your brand colors and assets</li>
+                    <li>4 revision iterations per asset project</li>
+                </ul>
+                <a href="#contact" class="cta-button">Secure Pipeline</a>
+            </div>
+
+            <!-- Tier 3: 1 Year -->
+            <div class="pricing-card">
+                <h2 class="tier-title">Annual Partner</h2>
+                <div class="price-container">
+                    <span class="currency">€</span>
+                    <span class="price">239</span>
+                    <span class="period">/ month</span>
+                </div>
+                <ul class="features-list">
+                    <li><strong>Up to 50 Visual Graphics / Month</strong> for absolute cross-platform presence</li>
+                    <li><strong>12 High-Tier Cinematic AI Videos</strong> or commercial variations</li>
+                    <li>Ultra-priority pipeline architecture (Sub 24h delivery)</li>
+                    <li>Native 8K resolution rendering optimized for large-scale physical print</li>
+                    <li>Unlimited revision passes to guarantee perfect brand alignment</li>
+                    <li>Dedicated project channel support sync</li>
+                </ul>
+                <a href="#contact" class="cta-button">Partner Annually</a>
+            </div>
+
+        </section>
+
+        <!-- Artwork Production Showcase Area -->
+        <section class="portfolio-header">
+            <h2>Production Capabilities</h2>
+        </section>
+
+        <section class="portfolio-grid">
+            <div class="portfolio-item">
+                <div class="placeholder-content">
+                    <h3>Cinematic Social Media Video</h3>
+                    <p>Fluid motion assets, high-end simulated texturing, and dynamic visual hooks.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="placeholder-content">
+                    <h3>High-Density Print Media</h3>
+                    <p>Flawless macro layout compositions upscaled to ultra-sharp printable 8K specifications.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="placeholder-content">
+                    <h3>Premium Brand Graphics</h3>
+                    <p>Polished layout options across digital, packaging configurations, and web architecture.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="placeholder-content">
+                    <h3>Hyper-Realistic Concept Art</h3>
+                    <p>Abstract art and complex material renders tailored explicitly to target consumer sets.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
